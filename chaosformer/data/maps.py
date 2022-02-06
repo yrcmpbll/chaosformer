@@ -2,7 +2,7 @@
 from abc import abstractclassmethod
 from abc import ABC, abstractmethod
 import numpy as np
-from chaosformer.data.orbits import Orbit
+from chaosformer.data.orbits import Orbit, CodifiableOrbit
 
 
 class Map(ABC):
@@ -26,7 +26,7 @@ class GenMap(Map):
         return self._f
     
     def iterate(self, x0, n):
-        generated_orbit = Orbit(x0=x0)
+        generated_orbit = CodifiableOrbit(x0=x0)
 
         for _ in range(n):
             generated_orbit.evolve(f=self._f)
