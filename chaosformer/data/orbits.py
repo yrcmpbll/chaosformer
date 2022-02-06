@@ -30,9 +30,21 @@ class CodifiableOrbit(Orbit):
                 array_list.append(np.concatenate(c))
 
         return array_list
-
         
 
 def make_chunks(l, n):
     n = max(1, n)
     return (l[i:i+n] for i in range(0, len(l), n))
+
+
+class BlockOrbit(CodifiableOrbit):
+
+    def __init__(self, x0) -> None:
+        super().__init__(x0)
+    
+    def build_blocked_orbit(self, n_point_dimension):
+        self.blocked_orbit = self.block_encode(n_point_dimension=n_point_dimension)
+    
+    def phrase_generator(self, phrase_len):
+        for phrase in make_chunks(l=self.blocked_orbit, n=phrase_len):
+            yield phrase
